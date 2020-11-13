@@ -17,18 +17,18 @@ class Configs(TrainValidConfigs):
     model: Module
     text: TextDataset
     n_tokens: int
+    inner_iterations = 100
     tokenizer: Callable
     rhn_depth = 1
     is_save_models = True
 
-    batch_size = 2 # Batch size: 5
-    epochs = 32 # Number of epochs: 32
-    dropout = 0.2 # Dropout rate: 0.2
-    d_model = 512 # Embedding size (Number of features for a word): 300
+    batch_size = 16 # Batch size: 16
+    epochs = 100 # Number of epochs: 100
+    dropout = 0.35 # Dropout rate: 0.35
+    d_model = 512 # Embedding size (Number of features for a word): 512
     rnn_size = 512 # Size of hidden layer: 512
     n_layers = 2 # Number of layers: 2
     seq_len = 512 # Time steps (Memory of characters): 512
-    inner_iterations = 100 # Number of iterations: 100
 
     def run(self):
         for _ in self.training_loop:

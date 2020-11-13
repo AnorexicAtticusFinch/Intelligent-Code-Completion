@@ -28,6 +28,15 @@ class GetPythonFiles:
             elif p.suffix == '.py':
                 self.add_file(p)
 
+def clean_code(inp):
+    lines = inp.split("\n")
+    final = []
+    for line in lines:
+        if line.isspace() or line == "" or line == "\n":
+            continue
+        final.append(line)
+    return final
+
 def read_file(path):
     with open(str(path)) as f:
         content = f.read()
@@ -36,13 +45,17 @@ def read_file(path):
 def write_file(path, source_files):
     with open(str(path), 'w') as f:
         for source in source_files:
-            f.write(read_file(source.path) + "\n")
+            inp = read_file(source.path)
+            inp_lines = clean_code(inp)
+            for line in inp_lines:
+                if line != "" and line != "\n":
+                    f.write(line + "\n")
 
 def main():
     source_files = GetPythonFiles().files
     np.random.shuffle(source_files)
     
-    train_valid_split = int(len(source_files) * 0.9)
+    train_valid_split = int(len(source_files) * 0.8)
     write_file(lab.get_data_path() / 'train.py', source_files[:train_valid_split])
     write_file(lab.get_data_path() / 'valid.py', source_files[train_valid_split:])
 
